@@ -63,18 +63,13 @@ Um clone do site do Instagram do Facebook, na qual você pode logar/registrar, c
 
 ---
 
-<!-- ## 🎨 Layout
+## 🎨 Layout
 
---- -->
+- **[Frontend](https://github.com/grochavieira/instagram-clone-frontend)**
+
+---
 
 ## 🚀 Como executar o projeto
-
-Este projeto é divido em duas partes:
-
-1. Backend (pasta server)
-2. Frontend (pasta web)
-
-💡O Frontend e o Mobile precisam que o Backend esteja sendo executado para funcionar.
 
 ### Pré-requisitos
 
@@ -87,10 +82,10 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ```bash
 
 # Clone este repositório
-$ git clone https://github.com/grochavieira/instagram-clone.git
+$ git clone https://github.com/grochavieira/instagram-clone-backend.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd instagram-clone
+$ cd instagram-clone-backend
 
 # Vá para a pasta server
 $ cd server
@@ -105,43 +100,11 @@ $ npm start
 
 ```
 
-#### 🧭 Rodando a aplicação web (Frontend)
-
-```bash
-
-# Clone este repositório
-$ git clone https://github.com/grochavieira/instagram-clone.git
-
-# Acesse a pasta do projeto no seu terminal/cmd
-$ cd instagram-clone
-
-# Vá para a pasta da aplicação Front End
-$ cd web
-
-# Instale as dependências
-$ yarn install
-
-# Execute a aplicação em modo de desenvolvimento
-$ yarn start
-
-# A aplicação será aberta na porta:3000 - acesse http://localhost:3000
-
-```
-
 ---
 
 ## 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
-
-#### **Website** ([React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/))
-
-- **[React Router Dom](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)**
-- **[React Icons](https://react-icons.github.io/react-icons/)**
-- **[Axios](https://github.com/axios/axios)**
-- **[SCSS](https://sass-lang.com/)**
-
-> Veja o arquivo [package.json](https://github.com/grochavieira/instagram-clone/blob/master/web/package.json)
 
 #### **Server** ([NodeJS](https://nodejs.org/en/) + [TypeScript](https://www.typescriptlang.org/))
 
@@ -151,14 +114,12 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[ts-node](https://github.com/TypeStrong/ts-node)**
 - **[Multer](https://github.com/expressjs/multer)**
 
-> Veja o arquivo [package.json](https://github.com/grochavieira/instagram-clone/blob/master/backend/package.json)
+> Veja o arquivo [package.json](https://github.com/grochavieira/instagram-clone-backend/blob/master/backend/package.json)
 
 #### **Utilitários**
 
 - Editor: **[Visual Studio Code](https://code.visualstudio.com/)**
 - Teste de API: **[Insomnia](https://insomnia.rest/)**
-<!-- - Ícones: **[Feather Icons](https://feathericons.com/)** -->
-- Fontes: **[Grand Hotel](https://fonts.google.com/specimen/GrandHotel)**
 
 ---
 

@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import UserModel from "../models/UserModel";
-import uploadImage from "../helpers/helpers";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-import credentials from "../credentials";
-import { validateRegisterInput, validateLoginInput } from "../util/validators";
+import {
+  cloudinaryUpload,
+  cloudinaryDelete,
+} from "../utils/cloudinaryFunctions";
+import imageToDataURI from "../utils/imageToDataURI";
+import { validateRegisterInput, validateLoginInput } from "../utils/validators";
 
 const generateToken = (user: any) => {
   return jwt.sign(
@@ -14,10 +16,10 @@ const generateToken = (user: any) => {
       name: user.name,
       email: user.email,
       username: user.username,
-      profilePhotoUrl: user.profilePhotoUrl,
+      profilePhoto: user.profilePhoto,
       friends: user.friends,
     },
-    credentials.SECRET_KEY,
+    process.env.TOKEN_SECRET || "",
     { expiresIn: "1h" }
   );
 };
@@ -70,6 +72,7 @@ class UserController {
         return response.status(400).json({ errors });
       }
 
+      console.log({ user });
       const token = generateToken(user);
 
       response.status(200).json({
@@ -103,7 +106,9 @@ class UserController {
 
       if (!valid) return response.status(400).json({ errors });
 
-      const profilePhotoUrl = await uploadImage(profilePhoto);
+      const profileData = imageToDataURI(profilePhoto);
+      const profileImage: any = await cloudinaryUpload(profileData);
+      console.log({ profileImage });
 
       const user = await UserModel.findOne({ username });
       if (user) {
@@ -121,7 +126,10 @@ class UserController {
         email,
         username,
         password: passwordHash,
-        profilePhotoUrl,
+        profilePhoto: {
+          publicId: profileImage.public_id,
+          url: profileImage.url,
+        },
       });
 
       const result: any = await newUser.save();

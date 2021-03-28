@@ -1,5 +1,5 @@
 import { Router } from "express";
-import multer from "multer";
+import upload from "./config/upload";
 
 import loginRequired from "./middlewares/loginRequired";
 import UserController from "./controllers/UserController";
@@ -7,13 +7,6 @@ import PostController from "./controllers/PostController";
 import CommentsController from "./controllers/CommentsController";
 
 const routes = Router();
-
-const multerMid = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 10 * 1024 * 1024,
-  },
-});
 
 const userController = new UserController();
 const postController = new PostController();
@@ -23,7 +16,7 @@ const commentsController = new CommentsController();
 routes.get("/users/:username", loginRequired, userController.index);
 routes.get("/user/:id", userController.show);
 routes.post("/user/login", userController.login);
-routes.post("/user", multerMid.single("file"), userController.store);
+routes.post("/user", upload.single("file"), userController.store);
 
 // POST ROUTES
 routes.get("/post", loginRequired, postController.index);
@@ -32,7 +25,7 @@ routes.get("/posts", loginRequired, postController.search);
 routes.post(
   "/post",
   loginRequired,
-  multerMid.single("file"),
+  upload.single("file"),
   postController.create
 );
 routes.delete("/post/:id", loginRequired, postController.delete);

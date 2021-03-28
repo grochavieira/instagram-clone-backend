@@ -2,11 +2,11 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import credentials from "./credentials";
+import "dotenv/config";
 import routes from "./routes";
 
 mongoose
-  .connect(credentials.MONGOURI, {
+  .connect(process.env.MONGO_URI || "", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -27,6 +27,8 @@ app.use(express.json());
 app.use(cors());
 app.use(routes);
 
-app.listen(3333, () => {
-  console.log("Listening to port 3333");
+const port = process.env.PORT || 3333;
+
+app.listen(port, () => {
+  console.log(`Listening to port ${port}...`);
 });

@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import PostModel from "../models/PostModel";
 import UserModel from "../models/UserModel";
-import uploadImage from "../helpers/helpers";
+import {
+  cloudinaryUpload,
+  cloudinaryDelete,
+} from "../utils/cloudinaryFunctions";
+import imageToDataURI from "../utils/imageToDataURI";
 
 class PostController {
   async index(request: any, response: Response) {
@@ -12,7 +16,7 @@ class PostController {
 
       if (!user) {
         return response.status(400).json({
-          erros: { general: "Usuário não existe" },
+          errors: { general: "Usuário não existe" },
         });
       }
 
@@ -51,7 +55,7 @@ class PostController {
 
       response.json(post);
     } catch (e) {
-      response.status(404).json({ message: "Unable to Get Post." });
+      response.status(404).json({ message: "Não foi possível pegar o post." });
     }
   }
 
@@ -84,10 +88,12 @@ class PostController {
         });
       }
 
-      const postUrl = await uploadImage(postFile);
+      const postData = imageToDataURI(postFile);
+      const postImage: any = await cloudinaryUpload(postData);
 
       const newPost = new PostModel({
-        postUrl,
+        postUrl: postImage.url,
+        publicId: postImage.public_id,
         user: id,
         username,
       });

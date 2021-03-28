@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/UserModel";
-import credentials from "../credentials";
 
 export default async (request: any, response: Response, next: NextFunction) => {
   const { authorization } = request.headers;
@@ -17,8 +16,8 @@ export default async (request: any, response: Response, next: NextFunction) => {
   const [, token] = authorization.split(" ");
 
   try {
-    const data: any = jwt.verify(token, credentials.SECRET_KEY);
-    const { id, name, email, username, profilePhotoUrl, friends } = data;
+    const data: any = jwt.verify(token, process.env.TOKEN_SECRET || "");
+    const { id, name, email, username, profilePhoto, friends } = data;
 
     const user = await UserModel.findOne({
       username,
@@ -36,7 +35,7 @@ export default async (request: any, response: Response, next: NextFunction) => {
     request.name = name;
     request.email = email;
     request.username = username;
-    request.profilePhotoUrl = profilePhotoUrl;
+    request.profilePhoto = profilePhoto;
     request.friends = friends;
     return next();
   } catch (err) {

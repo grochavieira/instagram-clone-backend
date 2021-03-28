@@ -4,6 +4,7 @@ const PostSchema = new mongoose.Schema({
   postUrl: { type: String, required: true },
   username: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
+  publicId: { type: String, required: true },
   comments: [
     {
       body: { type: String, required: true },

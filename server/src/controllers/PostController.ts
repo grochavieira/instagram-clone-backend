@@ -80,6 +80,8 @@ class PostController {
     try {
       const { id, username } = request;
       const postFile = request.file;
+      const { caption } = request.body;
+      console.log({ caption });
 
       if (!postFile) {
         return response.status(400).json({
@@ -92,11 +94,19 @@ class PostController {
       const postData = imageToDataURI(postFile);
       const postImage: any = await cloudinaryUpload(postData);
 
+      const currentDate = new Date();
+
       const newPost = new PostModel({
         postUrl: postImage.url,
         publicId: postImage.public_id,
         user: id,
         username,
+        caption: caption
+          ? {
+              body: caption,
+              createdAt: String(currentDate),
+            }
+          : {},
       });
 
       const post = await newPost.save();

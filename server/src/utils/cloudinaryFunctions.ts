@@ -6,13 +6,11 @@ export const cloudinaryUpload = async (imageData: string) => {
       upload_preset: "instagram-clone",
       timeout: 1200000,
     });
-    console.log({ uploadedResponse });
     return {
       public_id: uploadedResponse.public_id,
       url: uploadedResponse.secure_url,
     };
   } catch (error) {
-    console.log("DEU ERRO *****************");
     console.log(error);
   }
 };

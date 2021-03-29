@@ -61,7 +61,8 @@ class PostController {
 
   async search(request: any, response: Response) {
     try {
-      const { username } = request;
+      const { username } = request.params;
+      console.log({ username });
 
       const posts = await PostModel.find({
         username,

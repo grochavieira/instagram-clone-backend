@@ -41,7 +41,7 @@ export default async (request: any, response: Response, next: NextFunction) => {
   } catch (err) {
     return response.status(401).json({
       errors: {
-        general: "Token expirado ou inválido",
+        invalid_token: "Token expirado ou inválido",
       },
     });
   }

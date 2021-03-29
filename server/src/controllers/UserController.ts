@@ -20,7 +20,7 @@ const generateToken = (user: any) => {
       friends: user.friends,
     },
     process.env.TOKEN_SECRET || "",
-    { expiresIn: "1h" }
+    { expiresIn: process.env.TOKEN_EXPIRES_IN || "1h" }
   );
 };
 
@@ -30,16 +30,20 @@ class UserController {
     const usernameRegexp = new RegExp("^" + request.params.username);
     const users: any = await UserModel.find({ username: usernameRegexp });
 
-    const filteredUsers = users.filter(
-      (user: any) => user.username !== username
-    );
+    if (users.length > 0) {
+      const filteredUsers = users.filter(
+        (user: any) => user.username !== username
+      );
 
-    response.json(filteredUsers);
+      return response.json(filteredUsers);
+    } else {
+      return response.json([]);
+    }
   }
 
   async show(request: Request, response: Response) {
-    const { id: userId } = request.params;
-    const user = await UserModel.findById(userId);
+    const { username } = request.params;
+    const user = await UserModel.findOne({ username });
 
     if (!user) {
       return response
@@ -74,10 +78,12 @@ class UserController {
 
       console.log({ user });
       const token = generateToken(user);
-
+      delete user.password;
       response.status(200).json({
-        ...user._doc,
-        id: user._id,
+        user: {
+          ...user._doc,
+          id: user._id,
+        },
         token,
       });
     } catch (err) {

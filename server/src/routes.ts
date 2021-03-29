@@ -14,14 +14,14 @@ const commentsController = new CommentsController();
 
 // USER ROUTES
 routes.get("/users/:username", loginRequired, userController.index);
-routes.get("/user/:id", userController.show);
+routes.get("/user/:username", userController.show);
 routes.post("/user/login", userController.login);
 routes.post("/user", upload.single("file"), userController.store);
 
 // POST ROUTES
 routes.get("/post", loginRequired, postController.index);
 routes.get("/post/:id", postController.show);
-routes.get("/posts", loginRequired, postController.search);
+routes.get("/posts/:username", postController.search);
 routes.post(
   "/post",
   loginRequired,
@@ -34,7 +34,7 @@ routes.delete("/post/:id", loginRequired, postController.delete);
 routes.post("/post/like/:id", loginRequired, postController.like);
 
 // FOLLOW ROUTES
-routes.post("/follow", loginRequired, userController.follow);
+routes.put("/follow", loginRequired, userController.follow);
 
 // COMMENTS ROUTES
 routes.post("/comment/:id", loginRequired, commentsController.create);

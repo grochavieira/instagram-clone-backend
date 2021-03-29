@@ -4,7 +4,7 @@ import PostModel from "../models/PostModel";
 class CommentsController {
   async create(request: any, response: Response) {
     try {
-      const { id, username } = request;
+      const { id, username, profilePhoto } = request;
       const { body } = request.body;
       const { id: postId } = request.params;
 
@@ -25,6 +25,7 @@ class CommentsController {
       post.comments.unshift({
         body,
         username,
+        profilePhotoURL: profilePhoto.url,
         createdAt: String(currentDate),
       });
 

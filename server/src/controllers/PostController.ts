@@ -181,6 +181,7 @@ class PostController {
           .json({ errors: { general: "Post não existe" } });
       }
     } catch (err) {
+      console.log(err);
       response
         .status(404)
         .json({ errors: { message: "Não foi possível realizar a ação" } });

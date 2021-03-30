@@ -26,12 +26,10 @@ class PostController {
 
       friendsUsernames.push(username);
 
-      console.log(friendsUsernames);
-
       const concatFriends = friendsUsernames.join("|");
 
       const friendsRegex = new RegExp("^" + concatFriends);
-      console.log(friendsRegex);
+
       const posts = await PostModel.find({
         username: friendsRegex,
       });
@@ -62,7 +60,6 @@ class PostController {
   async search(request: any, response: Response) {
     try {
       const { username } = request.params;
-      console.log({ username });
 
       const posts = await PostModel.find({
         username,

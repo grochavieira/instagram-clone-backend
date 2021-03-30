@@ -107,6 +107,7 @@ class PostController {
       });
 
       const post = await newPost.save();
+      request.io.emit("post-created", "post-created");
 
       response.status(200).json({
         post,
@@ -133,6 +134,9 @@ class PostController {
 
       if (username === post.username) {
         await post.delete();
+
+        request.io.emit("post-deleted", "post-deleted");
+
         return response
           .status(200)
           .json({ message: "Post deletado com sucesso" });
@@ -169,6 +173,8 @@ class PostController {
         }
 
         await post.save();
+        request.io.emit("liked-post", "liked-post");
+
         return response
           .status(200)
           .json({ message: "Ação realizada com sucesso" });

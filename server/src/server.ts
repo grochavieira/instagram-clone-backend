@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
@@ -20,22 +20,12 @@ mongoose
   .catch((e) => console.log(e));
 
 const app = express();
-app.use(express.json());
-app.use(cors());
-app.use(routes);
 
 const server = http.createServer(app);
 const io = socketio(server);
 
 io.on("connection", (socket) => {
   const { id } = socket.handshake.query;
-
-  socket.on("message", (message, callback) => {
-    console.log("mensagem recebida");
-    console.log({ message });
-
-    callback("");
-  });
 
   // setInterval(() => {
   //   socket.emit("test", "hello there", () => {
@@ -47,6 +37,21 @@ io.on("connection", (socket) => {
     console.log("usuário se desconectou", id);
   });
 });
+
+app.use((request: Request | any, response: Response, next: NextFunction) => {
+  // O io será usado para mandar e enviar mensagens
+  request.io = io;
+
+  // Manda para as rotas os usuários conectados
+  // request.connectedUsers = connectedUsers;
+
+  // Para continuar o fluxo da aplicação, se não tiver isso ele para aqui mesmo
+  return next();
+});
+
+app.use(express.json());
+app.use(cors());
+app.use(routes);
 
 const port = process.env.PORT || 3333;
 

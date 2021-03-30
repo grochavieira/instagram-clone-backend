@@ -6,8 +6,11 @@ const PostSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   publicId: { type: String, required: true },
   caption: {
-    body: { type: String, required: true },
-    createdAt: { type: String, required: true },
+    type: {
+      body: { type: String, required: true },
+      createdAt: { type: String, required: true },
+    },
+    required: false,
   },
   comments: [
     {

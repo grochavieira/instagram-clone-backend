@@ -81,7 +81,6 @@ class PostController {
       const { id, username } = request;
       const postFile = request.file;
       const { caption } = request.body;
-      console.log({ caption });
 
       if (!postFile) {
         return response.status(400).json({
@@ -101,12 +100,13 @@ class PostController {
         publicId: postImage.public_id,
         user: id,
         username,
-        caption: caption
-          ? {
-              body: caption,
-              createdAt: String(currentDate),
-            }
-          : {},
+        caption:
+          caption !== undefined
+            ? {
+                body: caption,
+                createdAt: String(currentDate),
+              }
+            : {},
       });
 
       const post = await newPost.save();
@@ -126,7 +126,7 @@ class PostController {
       const { username } = request;
       const { id: postId } = request.params;
 
-      const post: any = await PostModel.findOne({ postId });
+      const post: any = await PostModel.findById(postId);
 
       if (!post) {
         return response

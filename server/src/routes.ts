@@ -44,5 +44,6 @@ routes.delete("/comment/:id", loginRequired, commentController.delete);
 
 // NOTIFICATION ROUTES
 routes.get("/notifications", loginRequired, notificationController.index);
+routes.put("/notifications/:id", loginRequired, notificationController.update);
 
 export default routes;

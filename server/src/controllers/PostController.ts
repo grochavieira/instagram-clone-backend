@@ -172,15 +172,24 @@ class PostController {
             username,
           });
 
-          if (post.username !== username) {
-            const newNotification = new NotificationModel({
-              username: post.username,
-              postId,
-              profilePhotoURL: profilePhoto.url,
-              body: `${name} curtiu sua postagem!`,
-            });
-            const notification = await newNotification.save();
-            request.io.emit("notification", { notification });
+          const notification = await NotificationModel.findOne({
+            username: post.username,
+            postId,
+            notificationType: "like",
+          });
+
+          if (!notification) {
+            if (post.username !== username) {
+              const newNotification = new NotificationModel({
+                username: post.username,
+                postId,
+                profilePhotoURL: profilePhoto.url,
+                body: `${name} curtiu sua postagem!`,
+                notificationType: "like",
+              });
+              const notification = await newNotification.save();
+              request.io.emit("notification", { notification });
+            }
           }
         }
 

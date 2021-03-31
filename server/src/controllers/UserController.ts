@@ -8,6 +8,7 @@ import {
 } from "../utils/cloudinaryFunctions";
 import imageToDataURI from "../utils/imageToDataURI";
 import { validateRegisterInput, validateLoginInput } from "../utils/validators";
+import NotificationModel from "../models/NotificationModel";
 
 const generateToken = (user: any) => {
   return jwt.sign(
@@ -159,7 +160,7 @@ class UserController {
 
   async follow(request: any, response: Response) {
     try {
-      const { username } = request;
+      const { username, profilePhoto, name } = request;
       const { friendUsername } = request.body;
 
       const user: any = await UserModel.findOne({ username });
@@ -184,6 +185,24 @@ class UserController {
           username: friendUsername,
           createdAt: String(currentDate),
         });
+
+        const notification = await NotificationModel.findOne({
+          username: friendUsername,
+          followingUsername: username,
+          notificationType: "follow",
+        });
+
+        if (!notification) {
+          const newNotification = new NotificationModel({
+            username: friendUsername,
+            followingUsername: username,
+            profilePhotoURL: profilePhoto.url,
+            body: `${name} começou a te seguir!`,
+            notificationType: "follow",
+          });
+          const notification = await newNotification.save();
+          request.io.emit("notification", { notification });
+        }
       }
 
       await user.save();

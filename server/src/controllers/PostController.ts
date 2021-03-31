@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import PostModel from "../models/PostModel";
 import UserModel from "../models/UserModel";
+import NotificationModel from "../models/NotificationModel";
 import {
   cloudinaryUpload,
   cloudinaryDelete,
@@ -26,13 +27,16 @@ class PostController {
 
       friendsUsernames.push(username);
 
-      const concatFriends = friendsUsernames.join("|");
+      console.log({ friendsUsernames });
 
-      const friendsRegex = new RegExp("^" + concatFriends);
+      // const concatFriends = friendsUsernames.join("|");
+      // const friendsRegex = new RegExp("^" + concatFriends);
 
       const posts = await PostModel.find({
-        username: friendsRegex,
+        username: { $in: friendsUsernames },
       });
+
+      console.log(posts);
 
       response.json(posts);
     } catch (e) {
@@ -101,7 +105,6 @@ class PostController {
           caption !== undefined
             ? {
                 body: caption,
-                createdAt: String(currentDate),
               }
             : {},
       });
@@ -154,7 +157,7 @@ class PostController {
 
   async like(request: any, response: Response) {
     try {
-      const { username } = request;
+      const { username, profilePhoto, name } = request;
       const { id: postId } = request.params;
 
       const post: any = await PostModel.findById(postId);
@@ -165,11 +168,20 @@ class PostController {
             (like: any) => like.username !== username
           );
         } else {
-          const currentDate = new Date();
           post.likes.push({
             username,
-            createdAt: String(currentDate),
           });
+
+          if (post.username !== username) {
+            const newNotification = new NotificationModel({
+              username: post.username,
+              postId,
+              profilePhotoURL: profilePhoto.url,
+              body: `${name} curtiu sua postagem!`,
+            });
+            const notification = await newNotification.save();
+            request.io.emit("notification", { notification });
+          }
         }
 
         await post.save();

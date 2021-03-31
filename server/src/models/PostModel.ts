@@ -17,13 +17,13 @@ const PostSchema = new mongoose.Schema({
       body: { type: String, required: true },
       username: { type: String, required: true },
       profilePhotoURL: { type: String, required: true },
-      createdAt: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now },
     },
   ],
   likes: [
     {
       username: { type: String, required: true },
-      createdAt: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now },
     },
   ],
   user: {

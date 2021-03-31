@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import PostModel from "../models/PostModel";
+import NotificationModel from "../models/NotificationModel";
 
 class CommentsController {
   async create(request: any, response: Response) {
     try {
-      const { id, username, profilePhoto } = request;
+      const { id, username, profilePhoto, name } = request;
       const { body } = request.body;
       const { id: postId } = request.params;
 
@@ -29,6 +30,17 @@ class CommentsController {
         createdAt: String(currentDate),
       });
 
+      if (post.username !== username) {
+        const newNotification = new NotificationModel({
+          username: post.username,
+          postId,
+          profilePhotoURL: profilePhoto.url,
+          body: `${name} comentou sua postagem!`,
+        });
+        const notification = await newNotification.save();
+        request.io.emit("notification", { notification });
+      }
+
       const result = await post.save();
 
       request.io.emit("commented-post", { post });
@@ -37,6 +49,7 @@ class CommentsController {
         result,
       });
     } catch (err) {
+      console.log(err);
       return response
         .status(404)
         .json({ errors: { message: "Não foi possível criar um comentário" } });

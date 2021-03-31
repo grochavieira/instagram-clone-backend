@@ -4,13 +4,15 @@ import upload from "./config/upload";
 import loginRequired from "./middlewares/loginRequired";
 import UserController from "./controllers/UserController";
 import PostController from "./controllers/PostController";
-import CommentsController from "./controllers/CommentsController";
+import CommentController from "./controllers/CommentController";
+import NotificationController from "./controllers/NotificationController";
 
 const routes = Router();
 
 const userController = new UserController();
 const postController = new PostController();
-const commentsController = new CommentsController();
+const commentController = new CommentController();
+const notificationController = new NotificationController();
 
 // USER ROUTES
 routes.get("/users/:username", loginRequired, userController.index);
@@ -37,7 +39,10 @@ routes.post("/post/like/:id", loginRequired, postController.like);
 routes.put("/follow", loginRequired, userController.follow);
 
 // COMMENTS ROUTES
-routes.post("/comment/:id", loginRequired, commentsController.create);
-routes.delete("/comment/:id", loginRequired, commentsController.delete);
+routes.post("/comment/:id", loginRequired, commentController.create);
+routes.delete("/comment/:id", loginRequired, commentController.delete);
+
+// NOTIFICATION ROUTES
+routes.get("/notifications", loginRequired, notificationController.index);
 
 export default routes;

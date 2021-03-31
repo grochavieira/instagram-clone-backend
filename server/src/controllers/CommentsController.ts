@@ -31,7 +31,7 @@ class CommentsController {
 
       const result = await post.save();
 
-      request.io.emit("commented-post", "commented-post");
+      request.io.emit("commented-post", { post });
 
       return response.status(200).json({
         result,

@@ -32,7 +32,7 @@ class CommentsController {
 
       if (post.username !== username) {
         const newNotification = new NotificationModel({
-          username: post.username,
+          username: username,
           postId,
           profilePhotoURL: profilePhoto.url,
           body: `${name} comentou sua postagem!`,

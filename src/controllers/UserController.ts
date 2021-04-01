@@ -182,10 +182,6 @@ class UserController {
       } else {
         user.friends.push({
           username: friendUsername,
-          followingUsername: username,
-          profilePhotoURL: profilePhoto.url,
-          body: `${name} começou a te seguir!`,
-          notificationType: "follow",
         });
 
         const notification = await NotificationModel.findOne({

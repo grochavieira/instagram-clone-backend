@@ -22,14 +22,12 @@ class CommentsController {
           .status(400)
           .json({ errors: { general: "Post não existe" } });
       }
-      const currentDate = new Date();
+
       post.comments.unshift({
         body,
         username,
         followingUsername: username,
         profilePhotoURL: profilePhoto.url,
-        notificationType: "comment",
-        createdAt: String(currentDate),
       });
 
       if (post.username !== username) {

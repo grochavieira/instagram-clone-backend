@@ -36,6 +36,7 @@ class CommentsController {
           postId,
           profilePhotoURL: profilePhoto.url,
           body: `${name} comentou sua postagem!`,
+          notificationType: "comment",
         });
         const notification = await newNotification.save();
         request.io.emit("notification", { notification });

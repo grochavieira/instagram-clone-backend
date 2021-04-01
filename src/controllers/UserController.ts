@@ -180,10 +180,12 @@ class UserController {
           (friend: any) => friend.username !== friendUsername
         );
       } else {
-        const currentDate = new Date();
         user.friends.push({
           username: friendUsername,
-          createdAt: String(currentDate),
+          followingUsername: username,
+          profilePhotoURL: profilePhoto.url,
+          body: `${name} começou a te seguir!`,
+          notificationType: "follow",
         });
 
         const notification = await NotificationModel.findOne({

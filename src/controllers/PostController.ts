@@ -169,7 +169,11 @@ class PostController {
           );
         } else {
           post.likes.push({
-            username,
+            username: post.username,
+            postId,
+            profilePhotoURL: profilePhoto.url,
+            body: `${name} curtiu sua postagem!`,
+            notificationType: "like",
           });
 
           const notification = await NotificationModel.findOne({

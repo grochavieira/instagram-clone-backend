@@ -26,7 +26,9 @@ class CommentsController {
       post.comments.unshift({
         body,
         username,
+        followingUsername: username,
         profilePhotoURL: profilePhoto.url,
+        notificationType: "comment",
         createdAt: String(currentDate),
       });
 
@@ -40,6 +42,7 @@ class CommentsController {
           notificationType: "comment",
         });
         const notification = await newNotification.save();
+        console.log(notification);
         request.io.emit("notification", { notification });
       }
 

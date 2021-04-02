@@ -11,7 +11,7 @@
 
 </p>
 <h1 align="center">
-    <img src="./assets/logo_backend.png" />
+    <img src="./.github/logo_backend.png" />
 </h1>
 
 <h4 align="center"> 

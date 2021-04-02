@@ -117,8 +117,8 @@ class UserController {
       const profileImage: any = await cloudinaryUpload(profileData);
       console.log({ profileImage });
 
-      const user = await UserModel.findOne({ username });
-      if (user) {
+      const usernameInUse = await UserModel.findOne({ username });
+      if (usernameInUse) {
         return response.status(400).json({
           errors: {
             username: "Nome de usuário já existe",
@@ -126,8 +126,8 @@ class UserController {
         });
       }
 
-      const user = await UserModel.findOne({ email });
-      if (user) {
+      const emailInUse = await UserModel.findOne({ email });
+      if (emailInUse) {
         return response.status(400).json({
           errors: {
             email: "Email já está em uso",

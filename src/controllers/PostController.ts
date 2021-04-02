@@ -94,8 +94,6 @@ class PostController {
       const postData = imageToDataURI(postFile);
       const postImage: any = await cloudinaryUpload(postData);
 
-      const currentDate = new Date();
-
       const newPost = new PostModel({
         postUrl: postImage.url,
         publicId: postImage.public_id,
@@ -136,6 +134,8 @@ class PostController {
       }
 
       if (username === post.username) {
+        await cloudinaryDelete(post.publicId);
+
         await post.delete();
 
         request.io.emit("post-deleted", { post });
@@ -149,6 +149,7 @@ class PostController {
           .json({ errors: { general: "Ação não permitida" } });
       }
     } catch (err) {
+      console.log(err);
       response
         .status(404)
         .json({ errors: { message: "Não foi possível deletar o post" } });

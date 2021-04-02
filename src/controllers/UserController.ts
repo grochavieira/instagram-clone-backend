@@ -221,6 +221,8 @@ class UserController {
       await user.save();
       await friendUser.save();
 
+      request.io.emit("following", { user, friendUser });
+
       return response.status(200).json(user);
     } catch (err) {
       console.log(err);

@@ -33,7 +33,7 @@
 
 ## 💻 Sobre o projeto
 
-Um clone do site do Instagram do Facebook, na qual você pode logar/registrar, criar novos posts(imagens/videos), seguir outros usuários e ver os posts dos usuários que você segue.
+API do clone do Instagram.
 
 ---
 
@@ -48,13 +48,6 @@ Um clone do site do Instagram do Facebook, na qual você pode logar/registrar, c
 - [x] Usuário pode seguir outros usuários
 - [x] Usuário pode ver o post de outros usuários (pessoas que o usuário segue)
 - [x] Usuário tem um perfil que mostra todas as imagens/videos que ele postou.
-
-## Bonus features
-
-- [x] Usuário pode ver um feed global de imagens/vídeos
-- [ ] O feed recarrega sempre que um novo post é adicionado (Web Sockets)
-- [ ] Usuário pode mandar mensagem para outros usuários
-- [ ] Usuário pode criar um story para outros usuários visualizarem
 
 ---
 
@@ -71,6 +64,10 @@ Um clone do site do Instagram do Facebook, na qual você pode logar/registrar, c
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Yarn](https://classic.yarnpkg.com/en/docs/install).d
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+
+### Váriaveis de Ambiente
+
+> Veja o arquivo [.env.sample](https://github.com/grochavieira/instagram-clone-backend/blob/master/.env.sample)
 
 #### 🎲 Rodando o Backend (servidor)
 
@@ -103,13 +100,17 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 #### **Server** ([NodeJS](https://nodejs.org/en/) + [TypeScript](https://www.typescriptlang.org/))
 
-- **[Express](https://expressjs.com/)**
+- **[express](https://expressjs.com/)**
 - **[CORS](https://expressjs.com/en/resources/middleware/cors.html)**
-- **[MongoDB](https://www.mongodb.com/)**
+- **[mongoDB](https://www.mongodb.com/)**
+- **[mongoose](https://mongoosejs.com/)**
+- **[cloudinary](https://cloudinary.com/)**
+- **[jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)**
+- **[image-data-uri](https://www.npmjs.com/package/image-data-uri)**
 - **[ts-node](https://github.com/TypeStrong/ts-node)**
-- **[Multer](https://github.com/expressjs/multer)**
+- **[multer](https://github.com/expressjs/multer)**
 
-> Veja o arquivo [package.json](https://github.com/grochavieira/instagram-clone-backend/blob/master/backend/package.json)
+> Veja o arquivo [package.json](https://github.com/grochavieira/instagram-clone-backend/blob/master/package.json)
 
 #### **Utilitários**
 

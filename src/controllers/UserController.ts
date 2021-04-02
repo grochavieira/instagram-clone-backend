@@ -164,24 +164,39 @@ class UserController {
       const { friendUsername } = request.body;
 
       const user: any = await UserModel.findOne({ username });
-
-      if (!user) {
+      const friendUser: any = await UserModel.findOne({
+        username: friendUsername,
+      });
+      console.log({ friendUser });
+      if (!user || !friendUser) {
         return response.status(400).json({
           errors: {
-            message: "Usuário não existe",
+            message: "Usuário(s) não existe(m)",
           },
         });
       }
 
       if (
-        user.friends.find((friend: any) => friend.username === friendUsername)
+        user.friends.find(
+          (friend: any) => friend.username === friendUsername
+        ) &&
+        friendUser.followers.find(
+          (follower: any) => follower.username === user.username
+        )
       ) {
         user.friends = user.friends.filter(
           (friend: any) => friend.username !== friendUsername
         );
+        friendUser.followers = friendUser.followers.filter(
+          (follower: any) => follower.username !== username
+        );
       } else {
         user.friends.push({
           username: friendUsername,
+        });
+
+        friendUser.followers.push({
+          username,
         });
 
         const notification = await NotificationModel.findOne({
@@ -204,6 +219,7 @@ class UserController {
       }
 
       await user.save();
+      await friendUser.save();
 
       return response.status(200).json(user);
     } catch (err) {

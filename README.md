@@ -41,13 +41,35 @@ API do clone do Instagram.
 
 ## ⚙️ Funcionalidades
 
-## User Stories
-
-- [x] Usuário pode se registrar criando uma conta com seu nome, email, nome de usuário, senha e foto de perfil e então pode se logar utilizando suas credenciais.
-- [x] Usuário pode criar um post e armazenar as images/vídeos em um servidor
-- [x] Usuário pode seguir outros usuários
-- [x] Usuário pode ver o post de outros usuários (pessoas que o usuário segue)
-- [x] Usuário tem um perfil que mostra todas as imagens/videos que ele postou.
+- [x] Rotas de usuário:
+  - [x] Registrar;
+  - [x] Listar;
+  - [x] Detalhar (um único usuário);
+  - [x] Logar.
+- [x] Rotas de postagens:
+  - [x] Criar;
+  - [x] Listar (de acordo com os seguidores);
+  - [x] Detalhar (um único post);
+  - [x] Deletar.
+- [x] Rotas de Curtidas:
+  - [x] Atualizar (curtir ou descurtir).
+- [x] Rotas de Seguir (Follow):
+  - [x] Atualizar (seguir ou não seguir).
+- [x] Rotas de Comentários:
+  - [x] Criar;
+  - [x] Deletar.
+- [x] Rotas de Notificações:
+  - [x] Listar (de acordo com o usuário);
+  - [x] Atualizar (somente se o usuário visualizou ou não a notificação).
+- [x] Socket.io foi adicionado para:
+  - [x] Curtidas;
+  - [x] Comentários;
+  - [x] Postagens (criar e deletar);
+  - [x] Seguidores;
+  - [x] Notificações.
+- [x] Cloudinary foi utilizado para armazenar as imagens;
+- [x] Autentificação de rotas por meio de JWT;
+- [x] MongoDB foi utilizado para armazenar os dados.
 
 ---
 
@@ -109,6 +131,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[image-data-uri](https://www.npmjs.com/package/image-data-uri)**
 - **[ts-node](https://github.com/TypeStrong/ts-node)**
 - **[multer](https://github.com/expressjs/multer)**
+- **[socket.io](https://socket.io/)**
 
 > Veja o arquivo [package.json](https://github.com/grochavieira/instagram-clone-backend/blob/master/package.json)
 

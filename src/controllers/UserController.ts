@@ -126,6 +126,15 @@ class UserController {
         });
       }
 
+      const user = await UserModel.findOne({ email });
+      if (user) {
+        return response.status(400).json({
+          errors: {
+            email: "Email já está em uso",
+          },
+        });
+      }
+
       const passwordHash = await bcrypt.hash(password, 12);
 
       const newUser = new UserModel({

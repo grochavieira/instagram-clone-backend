@@ -67,7 +67,7 @@ API do clone do Instagram.
   - [x] Postagens (criar e deletar);
   - [x] Seguidores;
   - [x] Notificações.
-- [x] Cloudinary foi utilizado para armazenar as imagens;
+- [x] Cloudinary foi utilizado para armazenar as imagens (deleta as imagens quando um post é deletado);
 - [x] Autentificação de rotas por meio de JWT;
 - [x] MongoDB foi utilizado para armazenar os dados.
 
